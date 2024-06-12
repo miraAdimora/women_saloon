@@ -1,0 +1,39 @@
+type Saloon = record {
+  id : text;
+  attachmentURL : text;
+  servicesRendered : vec ServiceRendered;
+  owner : principal;
+  saloonLocation : text;
+  createdAt : nat64;
+  saloonName : text;
+  updatedAt : opt nat64;
+  rating : float32;
+};
+type SaloonPayload = record {
+  attachmentURL : text;
+  saloonLocation : text;
+  saloonName : text;
+};
+type ServiceRendered = record {
+  id : text;
+  serviceName : text;
+  createdAt : nat64;
+  serviceDescription : text;
+  serviceAmount : float64;
+};
+type ServiceRenderedPayload = record {
+  serviceName : text;
+  serviceDescription : text;
+  serviceAmount : float64;
+};
+type _AzleResult = variant { Ok : Saloon; Err : text };
+type _AzleResult_1 = variant { Ok : vec Saloon; Err : text };
+service : () -> {
+  createSaloon : (SaloonPayload) -> (_AzleResult);
+  createService : (text, ServiceRenderedPayload) -> (_AzleResult);
+  deleteSaloon : (text) -> (_AzleResult);
+  getAllSaloons : () -> (_AzleResult_1) query;
+  getSaloonById : (text) -> (_AzleResult) query;
+  rateSaloon : (text, float64) -> (_AzleResult);
+  updateSaloonById : (text, SaloonPayload) -> (_AzleResult);
+}
